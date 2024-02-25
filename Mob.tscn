@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://xrrfsn1u0ds1"]
+
+[ext_resource type="Script" path="res://Mob.gd" id="1_igaar"]
+[ext_resource type="Texture2D" uid="uid://nlxqxp12w47b" path="res://arts/Free Cow Sprites.png" id="2_1sykf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jg15h"]
+atlas = ExtResource("2_1sykf")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7johc"]
+atlas = ExtResource("2_1sykf")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnech"]
+atlas = ExtResource("2_1sykf")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jjvdj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jg15h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7johc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnech")
+}],
+"loop": true,
+"name": &"enemy_run",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_orhda"]
+size = Vector2(64, 32)
+
+[node name="Mob" type="RigidBody2D" groups=["mobs"]]
+position = Vector2(0, 1)
+collision_mask = 0
+script = ExtResource("1_igaar")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_jjvdj")
+animation = &"enemy_run"
+frame_progress = 0.0829655
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 15)
+shape = SubResource("RectangleShape2D_orhda")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+position = Vector2(2, 2)
+scale = Vector2(1.2, 1)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
